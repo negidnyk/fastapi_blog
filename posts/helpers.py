@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select, insert, update, delete, func, distinct
-from posts.models import Post, PostLikes, UserPost
+from posts.models import Post, PostLikes, UserPost, PostFiles
 from auth.base_config import fastapi_users
 from auth.models import User
+from posts.schemas import PostCreator, MediaOut
+from files.models import File
 
 
 async def is_liked(post_id, user_id, session):
@@ -24,10 +26,12 @@ async def likes_count(post_id, session):
 async def get_creator(post_id, session):
     query = select(User).join(UserPost).where(UserPost.post_id == post_id)
     creator = await session.execute(query)
-    response = creator.scalars().all()
-    result = {
-        "id": response[0].id,
-        "name": response[0].username
-    }
-    return result
+    response = creator.scalars().first()
+    return PostCreator(id=response.id, name=response.username)
 
+
+async def get_media(post_id, session):
+    query = select(File).join(PostFiles).where(PostFiles.post_id == post_id)
+    post_media = await session.execute(query)
+    response = post_media.scalars().first()
+    return MediaOut(id=response.id, file=response.file)
