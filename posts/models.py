@@ -28,20 +28,20 @@ class PostLikes(Base):
     user_id = Column(Integer, ForeignKey("user.id", ondelete='CASCADE'))
 
 
-class UserPost(Base):
-    __tablename__ = "userPost"
+# class UserPost(Base):
+#     __tablename__ = "userPost"
+#
+#     id = Column(Integer, primary_key=True, index=True, unique=True)
+#     post_id = Column(Integer, ForeignKey("post.id", ondelete='CASCADE'))
+#     creator_id = Column(Integer, ForeignKey("user.id", ondelete='CASCADE'))
 
-    id = Column(Integer, primary_key=True, index=True, unique=True)
-    post_id = Column(Integer, ForeignKey("post.id", ondelete='CASCADE'))
-    creator_id = Column(Integer, ForeignKey("user.id", ondelete='CASCADE'))
 
-
-class PostFiles(Base):
-    __tablename__ = "postFiles"
-
-    id = Column(Integer, primary_key=True, unique=True)
-    post_id = Column(Integer, ForeignKey("post.id", ondelete='CASCADE'))
-    file_id = Column(Integer, ForeignKey("files.id", ondelete='CASCADE'))
+# class PostFiles(Base):
+#     __tablename__ = "postFiles"
+#
+#     id = Column(Integer, primary_key=True, unique=True)
+#     post_id = Column(Integer, ForeignKey("post.id", ondelete='CASCADE'))
+#     file_id = Column(Integer, ForeignKey("files.id", ondelete='CASCADE'))
 
 
 

@@ -26,6 +26,6 @@ class BaseUser(BaseModel):
 class UserOut (BaseModel):
     id: int
     email: EmailStr
-    name: str
+    username: str
     role: int
-    created_at: datetime
+    registered_at: datetime

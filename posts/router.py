@@ -7,6 +7,8 @@ from auth.models import User
 from posts.services import get_posts_list, get_my_posts_list, get_post_by_id, get_posts_of_user, create_a_post,\
     update_a_post, delete_post
 
+from posts.services import Post
+
 
 router = APIRouter(
     prefix="/posts",

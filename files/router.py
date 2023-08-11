@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, insert, update, delete, func, distinct
 from posts.schemas import CreatePost
 from database import get_async_session
-from posts.models import Post, PostLikes, UserPost
+from posts.models import Post, PostLikes
 from typing import List, Dict
 from auth.base_config import fastapi_users
 from auth.models import User
