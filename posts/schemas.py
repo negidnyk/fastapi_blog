@@ -18,6 +18,11 @@ class CreatePost(BaseModel):
     description: str = Field(max_length=1500, example="Some text to be attached to the post")
 
 
+class UpdatePost(BaseModel):
+    title: str = Field(max_length=1500, example="My awesome post!")
+    description: str = Field(max_length=1500, example="Some text to be attached to the post")
+
+
 class PostCreator(BaseModel):
     id: int
     name: str

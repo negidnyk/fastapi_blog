@@ -112,7 +112,7 @@ async def create_a_post(new_post, session, user):
     media_validation = await validate_media(new_post.file_id, session)
 
     if media_validation:
-        raise HTTPException(status_code=400, detail="File is already used in another post!")
+        raise HTTPException(status_code=400, detail="File is already used!")
 
     else:
         stmt = insert(Post).values(**new_post.dict(), creator_id=user.id)
@@ -122,7 +122,20 @@ async def create_a_post(new_post, session, user):
         stmt2 = update(File).where(File.id == new_post.file_id).values(is_used=True)
         await session.execute(stmt2)
         await session.commit()
-        return new_post
+
+        query = select(Post).limit(1).order_by(Post.created_at.desc())
+        post = await session.execute(query)
+        result_list = post.scalar_one_or_none()
+
+        return PostOut(id=result_list.id,
+                       title=result_list.title,
+                       description=result_list.description,
+                       media=await get_media(result_list.id, session),
+                       created_at=result_list.created_at,
+                       creator=await get_creator_by_post(result_list.id, session),
+                       is_liked=await is_liked(result_list.id, user.id, session),
+                       likes_count=await likes_count(result_list.id, session),
+                       comments_count=await comments_count(result_list.id, session))
 
 
 async def update_a_post(post_id, post, session, user):
@@ -136,15 +149,15 @@ async def update_a_post(post_id, post, session, user):
     if post_to_find.scalar_one_or_none() == None:
         raise HTTPException(status_code=404, detail="Post not found")
 
-    is_file_exist = await file_exist(post.file_id, session)
-
-    if is_file_exist:
-        raise HTTPException(status_code=404, detail="File not found!")
-
-    media_validation = await validate_media(post.file_id, session)
-
-    if media_validation:
-        raise HTTPException(status_code=400, detail="File is already used in another post!")
+    # is_file_exist = await file_exist(post.file_id, session)
+    #
+    # if is_file_exist:
+    #     raise HTTPException(status_code=404, detail="File not found!")
+    #
+    # media_validation = await validate_media(post.file_id, session)
+    #
+    # if media_validation:
+    #     raise HTTPException(status_code=400, detail="File is already used in another post!")
 
     else:
         query = select(Post.creator_id).filter(Post.id == post_id)
@@ -157,9 +170,22 @@ async def update_a_post(post_id, post, session, user):
             if stmt is not None:
                 await session.execute(stmt)
                 await session.commit()
-                return {"status": "success!", "post": post}
+
+                query = select(Post).where(Post.id == post_id)
+                post = await session.execute(query)
+                result_list = post.scalars().one()
+
+                return PostOut(id=result_list.id,
+                               title=result_list.title,
+                               description=result_list.description,
+                               media=await get_media(result_list.id, session),
+                               created_at=result_list.created_at,
+                               creator=await get_creator_by_post(result_list.id, session),
+                               is_liked=await is_liked(result_list.id, user.id, session),
+                               likes_count=await likes_count(result_list.id, session),
+                               comments_count=await comments_count(result_list.id, session))
             else:
-                raise HTTPException(status_code=404, detail="Post not found")
+                raise HTTPException(status_code=400, detail="Sorry, something went wrong")
 
 
 async def delete_post(post_id, session, user):

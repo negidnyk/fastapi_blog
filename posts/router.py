@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from posts.schemas import CreatePost
+from posts.schemas import CreatePost, UpdatePost
 from database import get_async_session
 from auth.base_config import fastapi_users
 from auth.models import User
@@ -50,7 +50,7 @@ async def create_post(new_post: CreatePost, session: AsyncSession = Depends(get_
 
 
 @router.put("/{post_id}", status_code=201)
-async def update_post(post_id: int, post: CreatePost, session: AsyncSession = Depends(get_async_session),
+async def update_post(post_id: int, post: UpdatePost, session: AsyncSession = Depends(get_async_session),
                       user: User = Depends(current_active_user)):
     return await update_a_post(post_id, post, session, user)
 

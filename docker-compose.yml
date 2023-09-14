@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_PASSWORD: tem18KA21
+    command: -p 1221
+    expose:
+        - 1221
+    env_file:
+      - .env
+
+  app:
+    build:
+      context: .
+    env_file:
+      - .env
+    container_name: blog_app
+    command: ["docker/app.sh"]
+    ports:
+      - 8975:8000
+    depends_on:
+      - db
