@@ -8,6 +8,7 @@ from users.user.router import router as router_users
 from postLikes.router import router as router_likes
 from files.router import router as router_files
 from comments.router import router as router_comments
+from uploading_files.router import router as router_upload_files
 
 
 app = FastAPI(
@@ -35,3 +36,4 @@ app.include_router(router_users)
 app.include_router(router_likes)
 app.include_router(router_files)
 app.include_router(router_comments)
+app.include_router(router_upload_files)

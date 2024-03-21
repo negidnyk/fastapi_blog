@@ -1,24 +1,111 @@
-version: "3.7"
+version: "3.9"
 services:
+
   db:
-    image: postgres:15
-    container_name: postgres_db
-    environment:
-      POSTGRES_PASSWORD: tem18KA21
-    command: -p 1221
-    expose:
-        - 1221
+    container_name: db
+    image: postgres:14.3-alpine
+    restart: always
     env_file:
       - .env
+    command: -p 5432
+    expose:
+      - 5432
+    networks:
+      - custom
+
 
   app:
     build:
       context: .
+    container_name: fastapi-blog
     env_file:
       - .env
-    container_name: blog_app
-    command: ["docker/app.sh"]
+    command: [ "docker/app.sh" ]
     ports:
-      - 8975:8000
+      - "8975:8000"
     depends_on:
       - db
+    networks:
+      - custom
+
+networks:
+  custom:
+    driver: bridge
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#version: '3.9'
+#
+#services:
+#  postgres_db:
+#    image: postgres
+#    container_name: postgres
+#    restart: always
+#    env_file:
+#      - .env
+#    command: -p 8888
+#    expose:
+#      - 8888
+#    networks:
+#      - custom
+
+
+
+#  app:
+#    build:
+#      context: .
+#    env_file:
+#      - .env
+#    container_name: fastapi-blog
+#    command: [ "docker/app.sh" ]
+#    ports:
+#      - "8975:8000"
+#    depends_on:
+#      - postgres_db
+
+#networks:
+#  custom:
+#    driver: bridge
+
+
+
+#version: "3.7"
+#services:
+#  db:
+#    image: postgres:14.3-alpine
+#    container_name: postgres_db
+#    restart: always
+#    ports:
+#    - "5432:5432"
+#    env_file:
+#      - .env-non-dev
+#
+#  app:
+#    build:
+#      context: .
+#    env_file:
+#      - .env-non-dev
+#    container_name: fastapi-blog
+#    command: [ "docker/app.sh" ]
+#    ports:
+#      - 8975:8000
+#    depends_on:
+#        - db
+
+

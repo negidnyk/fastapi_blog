@@ -11,12 +11,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select, insert, update, delete, func, distinct
 from comments.schemas import PostCommentsOut
 from users.user.helpers import get_creator_by_post, get_creator_by_id
+from users.user.validations import is_user
 
 
 async def create_a_comment(post_id, new_comment, session, user):
 
-    if user.role_id != 2:
-        raise HTTPException(status_code=403, detail="This option is for users only")
+    is_user(user.role_id)
 
     comment_details = {
         "user_id": user.id,
@@ -31,8 +31,7 @@ async def create_a_comment(post_id, new_comment, session, user):
 
 async def get_post_comments(skip, limit, post_id, session, user):
 
-    if user.role_id != 2:
-        raise HTTPException(status_code=403, detail="This option is for users only")
+    is_user(user.role_id)
 
     query = select(Comment).where(Comment.post_id == post_id).limit(limit).offset(skip).order_by(Comment.created_at.desc())
     comments_list = await session.execute(query)
@@ -43,8 +42,7 @@ async def get_post_comments(skip, limit, post_id, session, user):
 
 async def update_a_comment(comment_id, updated_comment, session, user):
 
-    if user.role_id != 2:
-        raise HTTPException(status_code=403, detail="This option is for users only")
+    is_user(user.role_id)
 
     query = select(Comment.user_id).filter(Comment.id == comment_id)
     comment_creator = await session.execute(query)
@@ -71,6 +69,8 @@ async def update_a_comment(comment_id, updated_comment, session, user):
 
 
 async def delete_comment(comment_id, session, user):
+
+    is_user(user.role_id)
 
     query = select(Comment).filter(Comment.id == comment_id)
     comment_to_delete = await session.execute(query)

@@ -1,7 +1,7 @@
 from typing import Optional
 
 from fastapi_users import schemas
-from pydantic import BaseModel, Required
+from pydantic import BaseModel, Required, Field
 from files.schemas import MediaOut
 
 
@@ -38,7 +38,7 @@ class UserCreate(schemas.BaseUserCreate):
     username: str
     email: str
     password: str
-    role_id: int
+    role_id: int = Field(description="1 - Admin, 2 - User, 3 - Superadmin")
     is_active: Optional[bool] = True
     is_superuser: Optional[bool] = False
     is_verified: Optional[bool] = False

@@ -32,6 +32,7 @@ async def get_creator_by_post(post_id, session):
                         bio=response.bio,
                         avatar=await get_avatar(response.id, session))
 
+
 async def get_creator_by_id(user_id, session):
 
     query = select(User).where(User.id == user_id)

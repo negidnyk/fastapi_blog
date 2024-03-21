@@ -5,9 +5,12 @@ from auth.schemas import UserRead, UserGetsUser
 from users.user.helpers import get_avatar
 from files.helpers import get_media, validate_media, file_exist
 from files.models import File
+from users.user.validations import is_user
 
 
 async def get_my_profile(session, user):
+
+    is_user(user.role_id)
 
     query = select(User).where(User.id == user.id)
     my_profile = await session.execute(query)
@@ -22,8 +25,9 @@ async def get_my_profile(session, user):
 
 async def update_my_profile(profile, session, user):
 
-    if user.role_id != 2:
-        raise HTTPException(status_code=403, detail="This option is for users only")
+    # if user.role_id != 2:
+    #     raise HTTPException(status_code=403, detail="This option is for users only")
+    is_user(user.role_id)
 
     if profile.avatar_id:
 
@@ -69,8 +73,9 @@ async def update_my_profile(profile, session, user):
 
 async def get_user_profile(user_id, session, user):
 
-    if user.role_id != 2:
-        raise HTTPException(status_code=403, detail="This option is for users only")
+    # if user.role_id != 2:
+    #     raise HTTPException(status_code=403, detail="This option is for users only")
+    is_user(user.role_id)
 
     query = select(User).where(User.id == user_id)
     user_profile = await session.execute(query)

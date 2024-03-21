@@ -7,9 +7,12 @@ from files.helpers import write_file
 from files.minio_config import client, bucket
 import os
 import tempfile
+from users.user.validations import is_user
 
 
 async def upload_an_image(file, session, user):
+
+    is_user(user.role_id)
 
     if file.content_type not in ["image/jpeg", "image/png"]:
         raise HTTPException(status_code=418, detail="Only .png and .jpeg images are allowed")

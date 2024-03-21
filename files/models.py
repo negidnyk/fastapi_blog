@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from sqlalchemy import Table, Column, Integer, String, TIMESTAMP, ForeignKey, JSON, Boolean, MetaData
-# from auth.models import user
 from sqlalchemy.orm import relationship
 
 from database import Base
