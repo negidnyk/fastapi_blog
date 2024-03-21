@@ -1,8 +1,8 @@
 from fastapi import HTTPException
 from sqlalchemy import select, delete
 from src.posts.models import Post
-from auth.models import User
-from auth.schemas import AdminGetsUser
+from src.auth.models import User
+from src.auth.schemas import AdminGetsUser
 from src.users.user.helpers import get_avatar
 from src.users.admin.validations import is_admin_or_superadmin, is_superadmin
 

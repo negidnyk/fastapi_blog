@@ -3,7 +3,7 @@ from src.uploading_files.services import upload_a_file, get_files
 from src.uploading_files.schemas import SortingOptions, FilteringOptions
 from src.uploading_files.schemas import SortingDirections
 from src.auth.base_config import fastapi_users
-from auth.models import User
+from src.auth.models import User
 
 
 router = APIRouter(

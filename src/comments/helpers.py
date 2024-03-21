@@ -1,6 +1,6 @@
 from src.comments.schemas import CommentCreator
 from sqlalchemy import select, func, distinct
-from auth.models import User
+from src.auth.models import User
 from src.comments.models import Comment
 
 async def get_creator(comment_id, session):

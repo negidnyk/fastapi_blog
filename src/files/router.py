@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_async_session
 from src.auth.base_config import fastapi_users
-from auth.models import User
+from src.auth.models import User
 from src.files.services import upload_an_image
 
 

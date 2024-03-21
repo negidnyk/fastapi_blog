@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from src.posts.schemas import CreatePost, UpdatePost
 from database import get_async_session
 from src.auth.base_config import fastapi_users
-from auth.models import User
+from src.auth.models import User
 from src.posts.services import get_posts_list, get_my_posts_list, get_post_by_id, get_posts_of_user, create_a_post,\
     update_a_post, delete_post
 

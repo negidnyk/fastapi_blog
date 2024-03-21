@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy import select, update
-from auth.models import User
-from auth.schemas import UserGetsUser
+from src.auth.models import User
+from src.auth.schemas import UserGetsUser
 from src.users.user.helpers import get_avatar
 from src.files.helpers import validate_media, file_exist
 from src.files.models import File

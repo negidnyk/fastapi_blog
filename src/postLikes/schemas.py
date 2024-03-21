@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 # from sqlalchemy.sql import func
-from auth.schemas import UserGetsUser
+from src.auth.schemas import UserGetsUser
 
 
 # func.now()

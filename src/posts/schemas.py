@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from datetime import datetime
 # from sqlalchemy.sql import func
 from src.files.schemas import MediaOut
-from auth.schemas import UserGetsUser
+from src.auth.schemas import UserGetsUser
 
 
 # func.now()

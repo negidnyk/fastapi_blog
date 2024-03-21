@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_async_session
 from src.auth.base_config import fastapi_users
-from auth.models import User
+from src.auth.models import User
 
 from src.comments.schemas import CreateComment
 from src.comments.services import create_a_comment, get_post_comments, update_a_comment, delete_comment

@@ -1,9 +1,9 @@
 from sqlalchemy import select
 from src.posts.models import Post
-from auth.models import User
+from src.auth.models import User
 from src.files.models import File
 from src.files.schemas import MediaOut
-from auth.schemas import UserGetsUser
+from src.auth.schemas import UserGetsUser
 from src.files.minio_config import client, bucket
 
 

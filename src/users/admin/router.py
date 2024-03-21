@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_async_session
 from src.auth.base_config import fastapi_users
-from auth.models import User
+from src.auth.models import User
 from src.users.admin.services import get_all_users, delete_single_user, get_all_admins, delete_single_admin
 
 

@@ -1,13 +1,13 @@
 from fastapi import FastAPI
 
 from src.auth.base_config import auth_backend, fastapi_users
-from auth.schemas import UserRead, UserCreate
+from src.auth.schemas import UserRead, UserCreate
 from src.posts.router import router as router_post
 from src.users.admin.router import router as router_admin
 from src.users.user.router import router as router_users
 from src.postLikes.router import router as router_likes
 from src.files.router import router as router_files
-from comments.router import router as router_comments
+from src.comments.router import router as router_comments
 from src.uploading_files.router import router as router_upload_files
 
 
